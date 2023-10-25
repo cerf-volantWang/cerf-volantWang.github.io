@@ -1,0 +1,20 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Book Notes - 分类 - JimWang&#39;s Blog</title>
+        <link>https://cerf-volantWang.github.io/categories/book-notes/</link>
+        <description>Book Notes - 分类 - JimWang&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jiuzheng2021@gmail.com (cerf-volant)</managingEditor>
+            <webMaster>jiuzheng2021@gmail.com (cerf-volant)</webMaster><lastBuildDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</lastBuildDate><atom:link href="https://cerf-volantWang.github.io/categories/book-notes/" rel="self" type="application/rss+xml" /><item>
+    <title>Computer Networks: A Top Down Approach</title>
+    <link>https://cerf-volantWang.github.io/topdownapproach/</link>
+    <pubDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/topdownapproach/</guid>
+    <description><![CDATA[Computer Networks: A Top Down Approach]]></description>
+</item>
+<item>
+    <title>Operating System: Three Easy Pieces</title>
+    <link>https://cerf-volantWang.github.io/threeeasypieces/</link>
+    <pubDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/threeeasypieces/</guid>
+    <description><![CDATA[Three Easy pieces!]]></description>
+</item>
+</channel>
+</rss>

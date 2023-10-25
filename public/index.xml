@@ -1,0 +1,64 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>JimWang&#39;s Blog</title>
+        <link>https://cerf-volantWang.github.io/</link>
+        <description>JimWang&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>jiuzheng2021@gmail.com (cerf-volant)</managingEditor>
+            <webMaster>jiuzheng2021@gmail.com (cerf-volant)</webMaster><lastBuildDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</lastBuildDate>
+            <atom:link href="https://cerf-volantWang.github.io/index.xml" rel="self" type="application/rss+xml" />
+        <item>
+    <title>Computer Architecture</title>
+    <link>https://cerf-volantWang.github.io/architecture_iiis/</link>
+    <pubDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/architecture_iiis/</guid>
+    <description><![CDATA[This lecture is presented by Mingyu Gao in Fall 2023. Thanks to 唐添 for discussing with me. Introduction System Evaluation Metrics RISC-V ISA and Assembly RISC-V Encoding and Vector Extension Processor: Single-Cycle &amp; Pipelined 10-24-2023 After discussing the structure of RISC-V instructions, it is time to consider how to build a RISC-V processor. ISA is a specification of functionality, and now we are going to build a processor to]]></description>
+</item>
+<item>
+    <title>Computer Networks: A Top Down Approach</title>
+    <link>https://cerf-volantWang.github.io/topdownapproach/</link>
+    <pubDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/topdownapproach/</guid>
+    <description><![CDATA[Computer Networks: A Top Down Approach]]></description>
+</item>
+<item>
+    <title>Computer Networks: An Introduction</title>
+    <link>https://cerf-volantWang.github.io/network_iiis/</link>
+    <pubDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/network_iiis/</guid>
+    <description><![CDATA[This lecture is presented by Longbo Huang in Fall 2023. Thanks to 高子翼 for discussing with me and offering me a lunch after class. We have a great time both in classroom and in 桃李园. Overview Application Layer Transport Layer TCP TCP and Network Layer Network Layer]]></description>
+</item>
+<item>
+    <title>Meltdown: Reading Kernel Memory from User Space</title>
+    <link>https://cerf-volantWang.github.io/meltdown/</link>
+    <pubDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/meltdown/</guid>
+    <description><![CDATA[Meltdown: Reading Kernel Memory from User Space]]></description>
+</item>
+<item>
+    <title>Operating System and Distributed System</title>
+    <link>https://cerf-volantWang.github.io/osds_iiis/</link>
+    <pubDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/osds_iiis/</guid>
+    <description><![CDATA[This lecture is presented by Wei Xu and Mingyu Gao in Fall 2023. Great thanks to 廖子豪 and 唐添 for taking this course and discussing with me and offer me a lunch in Tsinghua. Intro, Overview, Concurrency Review Virtual Memory and Paging File Systems and Transactions CPU Scheduling, Queuing, TCP Blockchains Time syncronization, Distributed Mutual Exclusion Multicast protocols, Distributed Transactions Distributed Consensus Protocols Distributed Storage, GFS Wide-area]]></description>
+</item>
+<item>
+    <title>Operating System: Three Easy Pieces</title>
+    <link>https://cerf-volantWang.github.io/threeeasypieces/</link>
+    <pubDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/threeeasypieces/</guid>
+    <description><![CDATA[Three Easy pieces!]]></description>
+</item>
+<item>
+    <title>Zero-Knowledge Proofs and Multi-Secure Computation</title>
+    <link>https://cerf-volantWang.github.io/zkmpc_iiis/</link>
+    <pubDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/zkmpc_iiis/</guid>
+    <description><![CDATA[This lecture is in Fall 2023 presented by Yifan Song. Thanks to 廖子豪 for discussing with me. Zero-Knowledge Proofs under Composition and Sequential Composition Lemma Commitment Scheme and Zero-Knowledge Proofs for General NP Statements Zero-Knowledge Proofs and General NP Statements (Continued), Negative Results, and Proof of Knowledge Sequential Composition for Proof of Knowledge and Sigma Protocol Sigma Protocol (Continued) Witness Hiding, Witness Indistinguishable, Witness Independent Definition of Secure]]></description>
+</item>
+<item>
+    <title>计算机系统性能测试</title>
+    <link>https://cerf-volantWang.github.io/systemtesting_thucs/</link>
+    <pubDate>Mon, 23 Oct 2023 20:15:04 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/systemtesting_thucs/</guid>
+    <description><![CDATA[这门课程由贵系的翟季冬老师于2023年秋季开设。 计算机性能测试与分析 平均值的选取 静态性能分析 测量误差 Lecturer: 翟季冬 误差的定义：测量结果偏离真实值的]]></description>
+</item>
+<item>
+    <title>Welcome!</title>
+    <link>https://cerf-volantWang.github.io/first_post/</link>
+    <pubDate>Mon, 23 Oct 2023 10:07:38 &#43;0800</pubDate><author>jiuzheng2021@gmail.com (cerf-volant)</author><guid>https://cerf-volantWang.github.io/first_post/</guid>
+    <description><![CDATA[Welcome to my personal blog! Hope you will enjoy your time here! 在搭建此个人博客之前，我已经拥有了自己的个人学术主页，见这里。廖嘉琦同我炫耀自己用Hugo新建的个人主页，我被这个风]]></description>
+</item>
+</channel>
+</rss>

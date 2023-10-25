@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Computer Architecture - JimWang&#39;s Blog</title><meta name="description" content=""><meta property="og:title" content="Computer Architecture" />
+<meta property="og:description" content="This lecture is presented by Mingyu Gao in Fall 2023. Thanks to 唐添 for discussing with me. Introduction System Evaluation Metrics RISC-V ISA and Assembly RISC-V Encoding and Vector Extension Processor: Single-Cycle &amp; Pipelined 10-24-2023 After discussing the structure of RISC-V instructions, it is time to consider how to build a RISC-V processor. ISA is a specification of functionality, and now we are going to build a processor to" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cerf-volantWang.github.io/architecture_iiis/" /><meta property="og:image" content="https://cerf-volantWang.github.io/architecture_iiis/architecture.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-10-23T20:15:04+08:00" />
+<meta property="article:modified_time" content="2023-10-23T20:15:04+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cerf-volantWang.github.io/architecture_iiis/architecture.jpg"/>
+<meta name="twitter:title" content="Computer Architecture"/>
+<meta name="twitter:description" content="This lecture is presented by Mingyu Gao in Fall 2023. Thanks to 唐添 for discussing with me. Introduction System Evaluation Metrics RISC-V ISA and Assembly RISC-V Encoding and Vector Extension Processor: Single-Cycle &amp; Pipelined 10-24-2023 After discussing the structure of RISC-V instructions, it is time to consider how to build a RISC-V processor. ISA is a specification of functionality, and now we are going to build a processor to"/>
+<meta name="application-name" content="JimWang&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="JimWang&#39;s Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://cerf-volantWang.github.io/architecture_iiis/" /><link rel="prev" href="https://cerf-volantWang.github.io/topdownapproach/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Computer Architecture",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/cerf-volantWang.github.io\/architecture_iiis\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/cerf-volantWang.github.io\/architecture_iiis\/architecture.jpg",
+                            "width":  995 ,
+                            "height":  553 
+                        }],"genre": "posts","keywords": "System","wordcount":  391 ,
+        "url": "https:\/\/cerf-volantWang.github.io\/architecture_iiis\/","datePublished": "2023-10-23T20:15:04+08:00","dateModified": "2023-10-23T20:15:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": "cerf-volant"},"author": {
+                "@type": "Person",
+                "name": "cerf-volant"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="" data-header-mobile=""><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="JimWang&#39;s Blog">JimWang&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="JimWang&#39;s Blog">JimWang&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/architecture_iiis/architecture.jpg"
+        data-srcset="/architecture_iiis/architecture.jpg, /architecture_iiis/architecture.jpg 1.5x, /architecture_iiis/architecture.jpg 2x"
+        data-sizes="auto"
+        alt="/architecture_iiis/architecture.jpg"
+        title="/architecture_iiis/architecture.jpg" /></div><div class="single-card" data-image="true"><h2 class="single-title animated flipInX">Computer Architecture</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>cerf-volant</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/lecture-notes/"><i class="fa-regular fa-folder fa-fw"></i>Lecture Notes</a></span></div>
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-10-23">2023-10-23</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 391 字</span>&nbsp;
+                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#system-evaluation-metrics">System Evaluation Metrics</a></li>
+    <li><a href="#risc-v-isa-and-assembly">RISC-V ISA and Assembly</a></li>
+    <li><a href="#risc-v-encoding-and-vector-extension">RISC-V Encoding and Vector Extension</a></li>
+    <li><a href="#processor-single-cycle--pipelined">Processor: Single-Cycle &amp; Pipelined</a>
+      <ul>
+        <li><a href="#review-digital-logic-design">Review: Digital Logic Design</a></li>
+        <li><a href="#a-single-cycle-processor">A Single-Cycle Processor</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><p>This lecture is presented by <a href="https://people.iiis.tsinghua.edu.cn/~gaomy/" target="_blank" rel="noopener noreffer">Mingyu Gao</a> in Fall 2023.</p>
+<p>Thanks to 唐添 for discussing with me.</p>
+<h2 id="introduction">Introduction</h2>
+<h2 id="system-evaluation-metrics">System Evaluation Metrics</h2>
+<h2 id="risc-v-isa-and-assembly">RISC-V ISA and Assembly</h2>
+<h2 id="risc-v-encoding-and-vector-extension">RISC-V Encoding and Vector Extension</h2>
+<h2 id="processor-single-cycle--pipelined">Processor: Single-Cycle &amp; Pipelined</h2>
+<p>10-24-2023</p>
+<p>After discussing the structure of RISC-V instructions, it is time to consider how to build a RISC-V processor.</p>
+<blockquote>
+<p>ISA is a specification of functionality, and now we are going to build a processor to implement such functionality.</p>
+</blockquote>
+<p>What I am interested is:</p>
+<ol>
+<li>common design across different ISAs</li>
+<li>what&rsquo;s different about RISC-V processor, i.e. benefitials?
+<ul>
+<li>RISC vs. CISC tradeoff</li>
+<li>MIPS vs. RISC-V</li>
+</ul>
+</li>
+</ol>
+<h3 id="review-digital-logic-design">Review: Digital Logic Design</h3>
+<p>Key elements:</p>
+<ul>
+<li>Gates: AND, OR, NOT, &hellip;</li>
+<li>Basic blocks: multiplexer (MUX), encoder/decoder, arithmetic/logic unit (ALU), &hellip;</li>
+<li>Simple state: latches, filp-flops, registers</li>
+<li>Synchronous memories: SRAM</li>
+</ul>
+<p>Clocking methodology of sequential circuits — interactions between <em>State elements</em> and <em>combinational logic</em></p>
+<ul>
+<li>State elements store the current states (data, address, control signals, &hellip;)</li>
+<li>Combinational logic calculates new states in each clock cycle</li>
+</ul>
+<h3 id="a-single-cycle-processor">A Single-Cycle Processor</h3>
+<p>We will focus on a simple one first and later optimize for performance (even starting from correcting mistakes).</p>
+<p>A single-cycle processor</p>
+<ul>
+<li>Execute one instruction to completion before moving to the next one</li>
+<li>Execute one instruction within one clock cycle, i.e., CPI = 1</li>
+<li>a subset of the RISC-V instructions
+<ol>
+<li>Arithmetic (R,I): <code>add</code>, <code>sub</code>, <code>addi</code>, <code>ori</code></li>
+<li>Memory (I,S): <code>lw</code>, <code>sw</code></li>
+<li>Branch/jump (B,J): <code>beq</code>, <code>j</code></li>
+</ol>
+</li>
+</ul>
+<p>Our Approach
+Generally speaking, a processor consists of two parts:</p>
+<ul>
+<li>Datapath: the hardware that processes and stores data</li>
+<li>Control: the hardware that manages the datapath</li>
+</ul>
+<p>Hardware Components</p>
+<ul>
+<li>State elements: PC register, a 32-entry register file, memory
+<ul>
+<li>Logically separate memories for instructions and data</li>
+<li>But physically can be the same one (or view them as caches)</li>
+<li>Recall the Von-Neuman&rsquo;s architecture!</li>
+</ul>
+</li>
+<li>Combinational logic (to update PC/regs/memory): ALU, MUX</li>
+<li>Control logic: customized combinational circuits</li>
+</ul>
+<p>To make things easier, break instruction execution into simple steps:</p>
+<ol>
+<li><strong>Fetch</strong> an instruction from memory specified by PC and update the PC</li>
+<li><strong>Decode</strong> the instruction and read operands from registers</li>
+<li><strong>Execute</strong> an operation using an ALU</li>
+<li><strong>Load/Store</strong> a value from/to memory if needed</li>
+<li><strong>Store</strong> the result to a register or memory</li>
+</ol>
+<p>Questions:</p>
+<ol>
+<li>in <strong>Fetch</strong> step, is the instruction in memory (why not cache)? And how can we update PC immediately?</li>
+<li>Why is <strong>Load/Store</strong> after ALU execution, i.e. <strong>Execute</strong> step?
+<ul>
+<li>Perhaps we are calculating address in <strong>Execute</strong> step</li>
+</ul>
+</li>
+<li>How does RISC help with faster fetch and decode?</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/system/">System</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2023-10-23</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/architecture_iiis/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/topdownapproach/" class="prev" rel="prev" title="Computer Networks: A Top Down Approach"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div><div id="comments" class="single-card"><div id="vssue"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/meteorlxy/vssue">Vssue</a>.
+            </noscript></div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.119.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/">cerf-volant</a></span></div>
+</div>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fa-solid fa-chevron-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fa-solid fa-comment-alt fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/vue/vssue/vssue.min.css"><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="/lib/vue/vue.runtime.min.js"></script><script src="/lib/vue/vssue/vssue.github.min.js"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/lightgallery/lightgallery.min.js"></script><script src="/lib/lightgallery/lg-thumbnail.min.js"></script><script src="/lib/lightgallery/lg-zoom.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":1000},"comment":{"vssue":{"clientID":"df793aa20495021add80","clientSecret":"f6bb9672420137311d728a9de4d828ae50ebc7dc","owner":"jiuzhengWang","repo":"Vssue","title":"Computer Architecture"}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":5,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>

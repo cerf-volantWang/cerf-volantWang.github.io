@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>计算机系统性能测试 - JimWang&#39;s Blog</title><meta name="description" content=""><meta property="og:title" content="计算机系统性能测试" />
+<meta property="og:description" content="这门课程由贵系的翟季冬老师于2023年秋季开设。 计算机性能测试与分析 平均值的选取 静态性能分析 测量误差 Lecturer: 翟季冬 误差的定义：测量结果偏离真实值的" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://cerf-volantWang.github.io/systemtesting_thucs/" /><meta property="og:image" content="https://cerf-volantWang.github.io/systemtesting_thucs/frontier.png"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-10-23T20:15:04+08:00" />
+<meta property="article:modified_time" content="2023-10-23T20:15:04+08:00" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://cerf-volantWang.github.io/systemtesting_thucs/frontier.png"/>
+<meta name="twitter:title" content="计算机系统性能测试"/>
+<meta name="twitter:description" content="这门课程由贵系的翟季冬老师于2023年秋季开设。 计算机性能测试与分析 平均值的选取 静态性能分析 测量误差 Lecturer: 翟季冬 误差的定义：测量结果偏离真实值的"/>
+<meta name="application-name" content="JimWang&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="JimWang&#39;s Blog"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://cerf-volantWang.github.io/systemtesting_thucs/" /><link rel="prev" href="https://cerf-volantWang.github.io/first_post/" /><link rel="next" href="https://cerf-volantWang.github.io/zkmpc_iiis/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "计算机系统性能测试",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/cerf-volantWang.github.io\/systemtesting_thucs\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/cerf-volantWang.github.io\/systemtesting_thucs\/frontier.png",
+                            "width":  1920 ,
+                            "height":  1080 
+                        }],"genre": "posts","keywords": "System","wordcount":  802 ,
+        "url": "https:\/\/cerf-volantWang.github.io\/systemtesting_thucs\/","datePublished": "2023-10-23T20:15:04+08:00","dateModified": "2023-10-23T20:15:04+08:00","publisher": {
+            "@type": "Organization",
+            "name": "cerf-volant"},"author": {
+                "@type": "Person",
+                "name": "cerf-volant"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="" data-header-mobile=""><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : '' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="JimWang&#39;s Blog">JimWang&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="#" onclick="return false;" class="menu-item theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="JimWang&#39;s Blog">JimWang&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fa-solid fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fa-solid fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fa-solid fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="#" onclick="return false;" class="theme-switch" title="切换主题">
+                    <i class="fa-solid fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/systemtesting_thucs/frontier.png"
+        data-srcset="/systemtesting_thucs/frontier.png, /systemtesting_thucs/frontier.png 1.5x, /systemtesting_thucs/frontier.png 2x"
+        data-sizes="auto"
+        alt="/systemtesting_thucs/frontier.png"
+        title="/systemtesting_thucs/frontier.png" /></div><div class="single-card" data-image="true"><h2 class="single-title animated flipInX">计算机系统性能测试</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="/" title="Author" rel=" author" class="author"><i class="fa-solid fa-user-circle fa-fw"></i>cerf-volant</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/lecture-notes/"><i class="fa-regular fa-folder fa-fw"></i>Lecture Notes</a></span></div>
+                <div class="post-meta-line"><span><i class="fa-regular fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-10-23">2023-10-23</time></span>&nbsp;<span><i class="fa-solid fa-pencil-alt fa-fw"></i>&nbsp;约 802 字</span>&nbsp;
+                    <span><i class="fa-regular fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fa-solid fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#计算机性能测试与分析">计算机性能测试与分析</a></li>
+    <li><a href="#平均值的选取">平均值的选取</a></li>
+    <li><a href="#静态性能分析">静态性能分析</a></li>
+    <li><a href="#测量误差">测量误差</a>
+      <ul>
+        <li><a href="#例子">例子</a></li>
+        <li><a href="#系统误差和随机误差">系统误差和随机误差</a></li>
+        <li><a href="#误差模型">误差模型</a></li>
+      </ul>
+    </li>
+    <li><a href="#计算机系统的复杂性">计算机系统的复杂性</a>
+      <ul>
+        <li><a href="#what-is-a-system">What is a System?</a>
+          <ul>
+            <li><a href="#emergent-proterties">Emergent Proterties</a></li>
+            <li><a href="#propagation-of-effects">Propagation of Effects</a></li>
+            <li><a href="#incommensurate-scaling">Incommensurate Scaling</a></li>
+            <li><a href="#trade-offs">Trade-offs</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><p>这门课程由贵系的翟季冬老师于2023年秋季开设。</p>
+<h2 id="计算机性能测试与分析">计算机性能测试与分析</h2>
+<h2 id="平均值的选取">平均值的选取</h2>
+<h2 id="静态性能分析">静态性能分析</h2>
+<h2 id="测量误差">测量误差</h2>
+<p>Lecturer: 翟季冬</p>
+<p>误差的定义：测量结果偏离真实值的程度。</p>
+<ul>
+<li>测试值 = 真实值 + 误差</li>
+</ul>
+<p>误差 in System</p>
+<ul>
+<li>interruption and system service</li>
+<li>multi-thread</li>
+<li>&hellip;</li>
+</ul>
+<h3 id="例子">例子</h3>
+<p>测试硬盘带宽</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c++" data-lang="c++"><span class="line"><span class="cl"><span class="k">for</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">size</span><span class="o">&lt;</span><span class="mi">32</span><span class="n">G</span><span class="p">;){</span>
+</span></span><span class="line"><span class="cl">  <span class="n">fd</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="n">new_file</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">t1</span> <span class="o">=</span> <span class="n">start_time</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">count</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">    <span class="n">write</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span><span class="n">buf</span><span class="p">,</span><span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="n">t2</span> <span class="o">=</span> <span class="n">stop_time</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">total_size</span> <span class="o">=</span> <span class="n">count</span> <span class="o">*</span> <span class="n">size</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="n">bandwidth</span> <span class="o">=</span> <span class="n">total_size</span> <span class="o">/</span> <span class="p">(</span><span class="n">t2</span> <span class="o">-</span> <span class="n">t1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="n">size</span> <span class="o">=</span> <span class="n">size</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>测的只是内存带宽！OS有buffer cache.
+文件系统缓存带来的影响，<code>fsync()</code></p>
+<h3 id="系统误差和随机误差">系统误差和随机误差</h3>
+<p>系统误差</p>
+<ul>
+<li>I/O写性能</li>
+<li>测试的错误，尽可能避免</li>
+</ul>
+<p>随机误差</p>
+<ul>
+<li>unpredictable</li>
+<li>unbiased</li>
+</ul>
+<h3 id="误差模型">误差模型</h3>
+<p>伯努利玻璃珠？二项分布 $\Rightarrow$ 高斯分布</p>
+<ul>
+<li>Precision</li>
+<li>Accuracy</li>
+</ul>
+<p>量化误差——用置信区间量化测试精度</p>
+<p>画折线图抖动很大</p>
+<p>《量化研究方法》很多假设正态分布</p>
+<ul>
+<li>但很多不符合正态分布！Statistical performance comparisons of computers, Tianshi Chen and Yunji Chen, HPCA 2012</li>
+<li>textbooks/papers perhaps not right!
+<ul>
+<li>results may not be correct</li>
+<li>but methodology is important</li>
+</ul>
+</li>
+<li>key-value storage: Amazon&rsquo;s may differ from each other
+<ul>
+<li>different situations</li>
+</ul>
+</li>
+</ul>
+<p>作业（考研题）</p>
+<p>自己写程序测量你的计算机上</p>
+<ul>
+<li>内存到CPU的<strong>带宽</strong></li>
+<li>Cache到CPU的<strong>带宽</strong>
+<ul>
+<li>Cache用户透明</li>
+<li>数据Cache和指令Cache</li>
+</ul>
+</li>
+</ul>
+<p>读带宽/写带宽？</p>
+<p>论文原始题目是：</p>
+<p>Cache是几路/多大 L1/L2/L3多大？替换策略？都可以写程序测出来！</p>
+<p>某年sigmetrics，pingkali?cornell-&gt;ut austin</p>
+<h2 id="计算机系统的复杂性">计算机系统的复杂性</h2>
+<p>系统的复杂性到底来自哪些方面？</p>
+<p>做系统的难点体现在哪里？</p>
+<h3 id="what-is-a-system">What is a System?</h3>
+<ul>
+<li>
+<p>System</p>
+<ul>
+<li>interacting set of components with a specified behavior at the interface with its environment</li>
+</ul>
+</li>
+<li>
+<p>Examples</p>
+<ul>
+<li>web, android, linux</li>
+</ul>
+</li>
+<li>
+<p>Hard to define; but has some symptoms:</p>
+<ul>
+<li>large number of components $\Rightarrow$ 大规模分布式系统</li>
+<li>large number of connections $\Rightarrow$ 互联网</li>
+<li>Irregular $\Rightarrow$ 稀疏、图计算问题</li>
+<li>No short description</li>
+<li>Many people required to design/maintain</li>
+</ul>
+</li>
+</ul>
+<p>System papers:</p>
+<ul>
+<li>no difficult math formulas</li>
+<li>we have solved a very difficult problem</li>
+</ul>
+<p>Problem Types</p>
+<ul>
+<li>Emergent properties</li>
+<li>Propagation of effects</li>
+<li>Incommensurate scaling</li>
+<li>Trade-offs</li>
+</ul>
+<h4 id="emergent-proterties">Emergent Proterties</h4>
+<p>Features</p>
+<ul>
+<li>no evident in the individual components of a system</li>
+<li>but show up when combining those components</li>
+<li>might also be called surprises</li>
+<li>an unalterable fact</li>
+</ul>
+<p>Example</p>
+<p>The Millennium Bridge</p>
+<h4 id="propagation-of-effects">Propagation of Effects</h4>
+<p>solution to a certain problem may cause a series of problems!</p>
+<h4 id="incommensurate-scaling">Incommensurate Scaling</h4>
+<h4 id="trade-offs">Trade-offs</h4>
+<p>系统吞吐 vs 用户等待时间</p>
+<blockquote>
+<p>We find that we were born too soon.</p>
+</blockquote>
+<p>in place of a well-organized theory, we use case studies</p>
+<ul>
+<li>Modularity</li>
+<li>Abstraction</li>
+<li>Layering</li>
+<li>Hierarchy
+<ul>
+<li>DNS System</li>
+</ul>
+</li>
+</ul>
+<p>设计是理想的，现实是骨感的！</p>
+<blockquote>
+<p>Any problem in computer science can be solved with another level of indirection</p>
+<p>performance&hellip;reduce a level</p>
+</blockquote>
+<ol>
+<li>95%置信区间</li>
+<li>计算机系统的复杂性来自于很多方面，积累非常重要！Do some dirty work!</li>
+<li>CESM？编译？</li>
+<li>不是记住多少东西，而是掌握思考的逻辑</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/system/">System</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2023-10-23</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/systemtesting_thucs/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/first_post/" class="prev" rel="prev" title="Welcome!"><i class="fa-solid fa-angle-left fa-fw"></i>Previous Post</a>
+            <a href="/zkmpc_iiis/" class="next" rel="next" title="Zero-Knowledge Proofs and Multi-Secure Computation">Next Post<i class="fa-solid fa-angle-right fa-fw"></i></a></div></div>
+</div><div id="comments" class="single-card"><div id="vssue"></div><noscript>
+                Please enable JavaScript to view the comments powered by <a href="https://github.com/meteorlxy/vssue">Vssue</a>.
+            </noscript></div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.119.0">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.2"><i class="fa-solid fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="fa-regular fa-copyright fa-fw"></i><span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/">cerf-volant</a></span></div>
+</div>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fa-solid fa-chevron-up fa-fw"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="查看评论">
+                <i class="fa-solid fa-comment-alt fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/vue/vssue/vssue.min.css"><link rel="stylesheet" href="/lib/lightgallery/lightgallery.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="/lib/vue/vue.runtime.min.js"></script><script src="/lib/vue/vssue/vssue.github.min.js"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/lightgallery/lightgallery.min.js"></script><script src="/lib/lightgallery/lg-thumbnail.min.js"></script><script src="/lib/lightgallery/lg-zoom.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":1000},"comment":{"vssue":{"clientID":"df793aa20495021add80","clientSecret":"f6bb9672420137311d728a9de4d828ae50ebc7dc","owner":"jiuzhengWang","repo":"Vssue","title":"计算机系统性能测试"}},"lightGallery":{"actualSize":false,"exThumbImage":"data-thumbnail","hideBarsDelay":2000,"selector":".lightgallery","speed":400,"thumbContHeight":80,"thumbWidth":80,"thumbnail":true},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":5,"noResultsFound":"没有找到结果","snippetLength":30,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
