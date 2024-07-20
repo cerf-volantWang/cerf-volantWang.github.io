@@ -35,15 +35,14 @@ math:
 - 2010-2011 [Fernbank Elementary School](https://www.fernbankelementary.com/)，**小学**
 - 2014-2017 [麓山国际实验学校](https://www.bnds.cn)，**初中**
 - 2017-2020 [长沙市长郡中学](http://www.changjun.com.cn/)，**高中**
-- 2020-2024（预计） [北京理工大学 计算机学院](https://cs.bit.edu.cn/)，计算机科学与技术，**本科**
+- 2020-2024 [北京理工大学 计算机学院](https://cs.bit.edu.cn/)，计算机科学与技术，**本科**
 - 2024-2029（预计） [北京大学 计算机学院](https://cs.pku.edu.cn/)，计算机科学与技术，**直博**
 
 ## 研究领域
 
 目前我主要关注**系统软件领域**，包括但不限于：
-- 网络体系结构(Network)
-- 操作系统与分布式系统(OS & Distributed System)
-- 软件测试(Testing)
+- LLM训练与推理优化
+- 张量程序编译器设计
 
 同时对**理论计算机科学**抱有浓厚兴趣：
 - 算法博弈论(AGT)
@@ -51,7 +50,8 @@ math:
 - 近似算法(Approx Alg)
 
 ## 个人荣誉
-
+- 北京市优秀毕业生
+- 北京理工大学优秀毕业生
 - 国家奖学金
 - 湖南徐特立优秀学生奖
 - 优秀学生标兵
@@ -82,59 +82,36 @@ math:
 - **蓝桥杯 2022/2023 C/C++组** 北京市一等奖
 - **全国大学生数学竞赛** 北京市一等奖
 - **部分地区大学生物理竞赛** 北京市二等奖
-- **“连山科技”程序设计大赛** 校二等奖，最快解题奖*2（感谢队友带我飞）
+- **“连山科技”程序设计大赛** 校二等奖，最快解题奖*2
 - **新生数学竞赛** 一等奖
 
 
-{{< admonition type=warning title="蓝桥杯【国赛】呢？" open=false >}}
-
-时间冲突 ~~自知实力不济~~ 生艰何拆：）
-
-{{< /admonition >}}
-
-<!-- - **天梯赛 2021/2022/2023** 个人一等奖
-- **CCPC 2022**：{{< link "https://board.xcpcio.com/ccpc/7th/guilin" 桂林站 "Visit XCPC Board!" >}} 银牌
-- **CCPC 2023**：{{< link "https://board.xcpcio.com/ccpc/8th/weihai" 威海站 "Visit XCPC Board!" >}} 银牌、{{< link "https://board.xcpcio.com/ccpc/8th/final" 总决赛 "Visit XCPC Board!" >}} 铜牌
-- **ICPC 2022**：{{< link "https://board.xcpcio.com/icpc/47th/jinan" 济南站 "Visit XCPC Board!" >}} 银牌、{{< link "https://board.xcpcio.com/icpc/47th/shenyang" 沈阳站 "Visit XCPC Board!" >}} 银牌(3rd)、{{< link href="https://board.xcpcio.com/icpc/46th/ec-final" content="EC Final" title="Visit XCPC Board!" >}} 铜牌
-- **ICPC 2023**：{{< link "https://board.xcpcio.com/icpc/47th/xian" 西安站 "Visit XCPC Board!" >}} 银牌(1st)、{{< link "https://board.xcpcio.com/icpc/47th/hefei" 合肥站 "Visit XCPC Board!" >}} 金牌 -->
-
-{{< admonition type=tip title="预告" open=false >}}
-最后一舞
-- **连山科技-17th** “初生只因吃老虎”$\Rightarrow$“布嘌呤半升”
-- **操作系统内核赛** together with [林晨](https://github.com/BITcyman) and [张书豪](https://studyingfather.com/)
-- **编译大赛** 单纯一个想法，很可能咕咕咕
-{{< /admonition >}}
 
 {{< /style >}}
 
 
 ## 学生工作
 
-> 岂因祸福避趋之？
-
-
 {{< admonition type=info title="学生会" open=false >}}
-- 2022.04-2023.04 第三十三届常代会 **会长**
-- 2022.12-2023.04 第三十三届常代会 **会员**
+- 2022.04-2023.04 北京理工大学第三十三届学生代表大会常任代表委员会 **会长**
+- 2022.12-2023.04 北京理工大学第三十三届学生代表大会常任代表委员会 **会员**
 {{< /admonition >}}
 
 {{< admonition type=tip title="党团相关" open=false >}}
-2021年11月成为预备党员，次年12月转正，一直在路上
+2021年11月成为预备党员，次年12月转正。
 
-- 2023.09至今 计算机学院2020级本科第二党支部 **党支书**
-- 2023.09至今 计算机学院07112005班 **团支书**
-- 2020.10-2023.07 睿信书院2001班 **团支书**
+- 2023.09-2024.06 北京理工大学计算机学院2020级本科第二党支部 **党支书**
+- 2023.09-2024.06 北京理工大学计算机学院07112005班 **团支书**
+- 2020.10-2023.07 北京理工大学睿信书院2001班 **团支书**
 
 {{< /admonition >}}
 
 {{< admonition type=warning title="学生组织" open=false >}}
 
-~~因为新生数学竞赛考了睿信第一被忽悠来的~~ 
-
 从部员到部长团再到主席团，有始有终，很开心！
 
-- 2022.09-2023.09 数学学院学习与创新中心 **副主席**
-- 2021.09-2022.09 数学学院学习与创新中心-数协爱好者协会 **副部长**
+- 2022.09-2023.09 北京理工大学数学学院学习与创新中心 **副主席**
+- 2021.09-2022.09 北京理工大学数学学院学习与创新中心-数协爱好者协会 **副部长**
 
 {{< /admonition >}}
 
@@ -146,14 +123,5 @@ math:
 - Programming in C++, Head TA, Spring 2023, Lecturer: [Zhengyang Liu](https://lozycs.github.io/)
 - Topics in Algorithmic Game Theory: Equilibrium Computation, Head TA, Fall 2023, Lecturer: [Zhengyang Liu](https://lozycs.github.io/)
 - 随机算法研讨班，主持人，Summer 2022
-- 睿信书院2103班，朋辈导师
-
-{{< admonition type=tip title="What's NEXT?" open=false >}}
-
-- Our CS Peer Talk/Yao's Lecture!
-  - help students find their own interests ASAP
-- More TAs during Ph.D. candidate!
-
-
-{{< /admonition >}}
+- 北京理工大学睿信书院2103班，朋辈导师
 
